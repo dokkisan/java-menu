@@ -1,7 +1,10 @@
 package menu.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import menu.Coach;
 import menu.OperationMessage;
 import menu.view.InputView;
 import menu.view.OutputView;
@@ -17,6 +20,8 @@ public class MenuController {
 
 	public void run() {
 		List<String> names = getCoachNames();
+		Map<String, Coach> coaches = getAvoidFoods(names);
+		System.out.println("coaches = " + coaches);
 	}
 
 	private List<String> getCoachNames() {
@@ -28,5 +33,15 @@ public class MenuController {
 				outputView.printMessage(e.getMessage());
 			}
 		}
+	}
+
+	private Map<String, Coach> getAvoidFoods(List<String> names) {
+		Map<String, Coach> coaches = new HashMap<>();
+		for (String name : names) {
+			outputView.printMessage(name + OperationMessage.INPUT_AVOID_FOODS.getMessage());
+			List<String> avoidFoods = inputView.inputAvoidFoods();
+			coaches.put(name, new Coach(name, avoidFoods));
+		}
+		return coaches;
 	}
 }

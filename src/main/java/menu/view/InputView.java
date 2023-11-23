@@ -17,6 +17,10 @@ public class InputView {
         return validateInputNamesFormat(validateInputNamesCount(names));
     }
 
+    public List<String> inputAvoidFoods() {
+        return List.of(scanner.nextLine().split(","));
+    }
+
     private List<String> validateInputNamesFormat(List<String> names) {
         final int MIN_NAME_LENGTH = 2;
         final int MAX_NAME_LENGTH = 4;
