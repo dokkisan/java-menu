@@ -1,11 +1,15 @@
 package menu.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import menu.Coach;
+import menu.DayOfWeek;
+import menu.MenuCategory;
 import menu.OperationMessage;
+import menu.model.MenuManager;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -21,7 +25,7 @@ public class MenuController {
 	public void run() {
 		List<String> names = getCoachNames();
 		Map<String, Coach> coaches = getAvoidFoods(names);
-		System.out.println("coaches = " + coaches);
+		viewMenuRecommendationResult();
 	}
 
 	private List<String> getCoachNames() {
@@ -43,5 +47,32 @@ public class MenuController {
 			coaches.put(name, new Coach(name, avoidFoods));
 		}
 		return coaches;
+	}
+
+	private void viewMenuRecommendationResult() {
+		MenuManager menuManager = new MenuManager();
+		outputView.printMessage(OperationMessage.RECOMMEND_RESULT.getMessage());
+		outputView.printListWithJoining(createLunchDaysForView());
+		outputView.printListWithJoining(createCategoriesForView(menuManager.recommendCategories()));
+		outputView.printBlankLine();
+		outputView.printMessage(OperationMessage.RECOMMEND_SUCCESS.getMessage());
+	}
+
+	private List<String> createCategoriesForView(List<MenuCategory> result) {
+		final String CATEGORY_PREFIX = "카테고리";
+		List<String> categoryNames = new ArrayList<>();
+		categoryNames.add(CATEGORY_PREFIX);
+		for (MenuCategory category : result) {
+			categoryNames.add(category.getName());
+		}
+		return categoryNames;
+	}
+
+	private List<String> createLunchDaysForView() {
+		List<String> days = new ArrayList<>();
+		for (DayOfWeek day : DayOfWeek.values()) {
+			days.add(day.getName());
+		}
+		return days;
 	}
 }

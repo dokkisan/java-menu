@@ -74,12 +74,12 @@
 
 ### 카테고리 추천
 
-- [ ] Randoms.pickNumberInRange() 이용
+- [x] Randoms.pickNumberInRange() 이용
     ```
     // 예시 코드. 사용하는 자료 구조에 따라 난수를 적절하게 가공해도 된다.
     String category = categories.get(Randoms.pickNumberInRange(1, 5));
     ```
-    - [ ] 1이면 일식, 2면 한식, 3이면 중식, 4면 아시안, 5면 양식을 추천
+    - [x] 1이면 일식, 2면 한식, 3이면 중식, 4면 아시안, 5면 양식을 추천
 - [ ] 추천 불가한 카테고리는 난수 재생성
 
 ### 메뉴 추천
