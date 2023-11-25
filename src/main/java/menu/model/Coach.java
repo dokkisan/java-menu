@@ -1,4 +1,4 @@
-package menu;
+package menu.model;
 
 import java.util.List;
 
@@ -13,5 +13,9 @@ public class Coach {
 
 	public boolean isAvoidFood(String menu) {
 		return avoidFoods.stream().anyMatch(menu::equals);
+	}
+
+	public String getName() {
+		return name;
 	}
 }

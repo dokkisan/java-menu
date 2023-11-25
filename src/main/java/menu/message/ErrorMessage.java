@@ -1,4 +1,4 @@
-package menu;
+package menu.message;
 
 public enum ErrorMessage {
     NAME_SEPARATOR_ERROR("코치의 이름은 쉼표(, )로 구분해 입력해주세요."),

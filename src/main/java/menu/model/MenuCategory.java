@@ -1,6 +1,4 @@
-package menu;
-
-import java.util.Arrays;
+package menu.model;
 
 public enum MenuCategory {
 	KOREAN(1, "한식"),

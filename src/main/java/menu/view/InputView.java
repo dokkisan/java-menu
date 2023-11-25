@@ -3,7 +3,8 @@ package menu.view;
 import java.util.List;
 import java.util.Scanner;
 
-import menu.ErrorMessage;
+import camp.nextstep.edu.missionutils.Console;
+import menu.message.ErrorMessage;
 
 public class InputView {
     private final Scanner scanner;
@@ -58,4 +59,5 @@ public class InputView {
         }
         return List.of(input.split(SEPARATOR));
     }
+    Console
 }

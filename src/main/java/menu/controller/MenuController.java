@@ -1,14 +1,15 @@
 package menu.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import menu.Coach;
-import menu.DayOfWeek;
-import menu.MenuCategory;
-import menu.OperationMessage;
+import menu.model.Coach;
+import menu.model.DayOfWeek;
+import menu.model.MenuCategory;
+import menu.message.OperationMessage;
 import menu.model.MenuManager;
 import menu.view.InputView;
 import menu.view.OutputView;
@@ -53,7 +54,7 @@ public class MenuController {
 		MenuManager menuManager = new MenuManager();
 		outputView.printMessage(OperationMessage.RECOMMEND_RESULT.getMessage());
 		outputView.printListWithJoining(createLunchDaysForView());
-		outputView.printListWithJoining(createCategoriesForView(menuManager.recommendCategories()));
+		outputView.printListWithJoining(createCategoriesForView(menuManager.getRecommendedCategories()));
 		outputView.printBlankLine();
 		outputView.printMessage(OperationMessage.RECOMMEND_SUCCESS.getMessage());
 	}
@@ -75,4 +76,15 @@ public class MenuController {
 		}
 		return days;
 	}
+
+	// private void viewRecommendationMenus() {
+	// 	MenuManager menuManager = new MenuManager();
+	// 	Map<String, List<String>> menus = menuManager.getRecommendedMenusResult();
+	// 	for (Map.Entry<String, List<String>> menu : menus.entrySet()) {
+	// 		List<String> recommendationMenus = new ArrayList<>();
+	// 		recommendationMenus.add(menu.getKey());
+	// 		recommendationMenus.add(String.valueOf(menu));
+	// 	}
+	// 	outputView.printListWithJoining();
+	// }
 }
