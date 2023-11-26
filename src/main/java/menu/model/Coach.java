@@ -36,6 +36,10 @@ public class Coach {
 		recommendedMenus.put(day, menu);
 	}
 
+	public boolean isRecommendedMenu(String menu) {
+		return recommendedMenus.containsValue(menu);
+	}
+
 	public Map<DayOfWeek, String> getRecommendedMenus() {
 		return recommendedMenus;
 	}

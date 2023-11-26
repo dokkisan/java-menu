@@ -31,19 +31,21 @@ public class MenuManager {
 		for (DayOfWeek day : DayOfWeek.values()) {
 			List<Coach> coaches = coachRepository.findAll();
 			for (Coach coach : coaches) {
-				MenuCategory todaysCategory = recommendedCategories.get(day);
-				String recommendedMenu = recommendMenuByCategory(coach, todaysCategory);
-				coach.recommendedMenus(day, recommendedMenu);
+				MenuCategory categoryByDay = recommendedCategories.get(day);
+				String recommendedMenu = recommendMenuByCategory(coach, categoryByDay);
+				if (!coach.isRecommendedMenu(recommendedMenu)) {
+					coach.recommendedMenus(day, recommendedMenu);
+				}
 			}
 		}
 	}
 
-	private String recommendMenuByCategory(Coach coach, MenuCategory todaysCategory) {
-		String recommendedMenu = Randoms.shuffle(Menu.getMenuBy(todaysCategory)).get(0);
-		if (coach.isAvoidFood(recommendedMenu)) {
-			recommendedMenu = Randoms.shuffle(Menu.getMenuBy(todaysCategory)).get(0);
+	private String recommendMenuByCategory(Coach coach, MenuCategory categoryByDay) {
+		String menuByCategory = Randoms.shuffle(Menu.getMenuBy(categoryByDay)).get(0);
+		if (coach.isAvoidFood(menuByCategory)) {
+			menuByCategory = Randoms.shuffle(Menu.getMenuBy(categoryByDay)).get(0);
 		}
-		return recommendedMenu;
+		return menuByCategory;
 	}
 
 	public Map<DayOfWeek, MenuCategory> getRecommendedCategories() {

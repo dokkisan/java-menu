@@ -1,5 +1,6 @@
 package menu.view;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ public class OutputView {
 	public void printListWithJoining(List<String> result) {
 		System.out.println(result.stream()
 			.map(String::valueOf)
-			.collect(Collectors.joining(" | ", "[ ", " ]")));
+			.collect(Collectors.joining(" | ", "[ ", " ]")
+			));
 	}
 }

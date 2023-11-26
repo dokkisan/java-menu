@@ -24,7 +24,6 @@ public class MenuController {
 
 	public void run() {
 		createCoaches(getCoachNames());
-		outputView.printBlankLine();
 		getAvoidFoods();
 		viewMenuRecommendationResult();
 	}
