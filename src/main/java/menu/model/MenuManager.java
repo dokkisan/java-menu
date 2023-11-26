@@ -28,8 +28,7 @@ public class MenuManager {
 
 		for (int i = 0; i < DayOfWeek.values().length; i++) {
 			MenuCategory category = MenuCategory.get(Randoms.pickNumberInRange(1, 5));
-			int frequency = Collections.frequency(recommendedCategories, category);
-			if (frequency > MAX_RECOMMEND_RANGE) {
+			if (Collections.frequency(recommendedCategories, category) >= MAX_RECOMMEND_RANGE) {
 				category = MenuCategory.get(Randoms.pickNumberInRange(1, 5));
 			}
 			recommendedCategories.add(category);
