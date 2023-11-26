@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Coach {
-	private String name;
+	private final String name;
 	private List<String> avoidFoods;
 
 	public Coach(String name) {
@@ -20,6 +20,7 @@ public class Coach {
 		return name;
 	}
 
+	// TODO: setter 삭제
 	public void setAvoidFoods(List<String> avoidFoods) {
 		this.avoidFoods = avoidFoods;
 	}

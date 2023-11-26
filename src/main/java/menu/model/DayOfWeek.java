@@ -1,20 +1,19 @@
 package menu.model;
 
 public enum DayOfWeek {
-    DAY_CATEGORY("구분"),
-    MONDAY("월요일"),
-    TUESDAY("화요일"),
-    WEDNESDAY("수요일"),
-    THURSDAY("목요일"),
-    FRIDAY("금요일");
+	MONDAY("월요일"),
+	TUESDAY("화요일"),
+	WEDNESDAY("수요일"),
+	THURSDAY("목요일"),
+	FRIDAY("금요일");
 
-    private final String name;
+	private final String name;
 
-    DayOfWeek(String name) {
-        this.name = name;
-    }
+	DayOfWeek(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 }

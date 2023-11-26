@@ -51,7 +51,8 @@ public class MenuController {
 		List<Coach> coaches = coachRepository.findAll();
 		for (Coach coach : coaches) {
 			outputView.printMessage(coach.getName() + OperationMessage.INPUT_AVOID_FOODS.getMessage());
-			coach.setAvoidFoods(inputView.inputAvoidFoods());
+			List<String> avoidFoods = inputView.inputAvoidFoods();
+			coach.setAvoidFoods(avoidFoods);
 		}
 	}
 
@@ -81,15 +82,4 @@ public class MenuController {
 		}
 		return days;
 	}
-
-	// private void viewRecommendationMenus() {
-	// 	MenuManager menuManager = new MenuManager();
-	// 	Map<String, List<String>> menus = menuManager.getRecommendedMenusResult();
-	// 	for (Map.Entry<String, List<String>> menu : menus.entrySet()) {
-	// 		List<String> recommendationMenus = new ArrayList<>();
-	// 		recommendationMenus.add(menu.getKey());
-	// 		recommendationMenus.add(String.valueOf(menu));
-	// 	}
-	// 	outputView.printListWithJoining();
-	// }
 }
