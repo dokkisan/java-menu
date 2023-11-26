@@ -23,6 +23,7 @@ public class MenuController {
 	}
 
 	public void run() {
+		outputView.printMessage(OperationMessage.START_RECOMMEND.getMessage());
 		createCoaches(getCoachNames());
 		getAvoidFoods();
 		viewMenuRecommendationResult();
@@ -63,7 +64,6 @@ public class MenuController {
 		outputView.printListWithJoining(createCategoriesForView(menuManager.getRecommendedCategories()));
 		menuManager.recommendMenus();
 		createRecommendedMenusForView();
-		outputView.printBlankLine();
 		outputView.printMessage(OperationMessage.RECOMMEND_SUCCESS.getMessage());
 	}
 

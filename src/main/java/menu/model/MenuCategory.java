@@ -1,23 +1,23 @@
 package menu.model;
 
 public enum MenuCategory {
-	KOREAN(1, "한식"),
-	JAPANESE(2, "일식"),
+	JAPANESE(1, "일식"),
+	KOREAN(2, "한식"),
 	CHINESE(3, "중식"),
 	ASIAN(4, "아시안"),
 	WESTERN(5, "양식");
 
-	private final int index;
+	private final int id;
 	private final String name;
 
-	MenuCategory(int index, String name) {
-		this.index = index;
+	MenuCategory(int id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 
 	public static MenuCategory get(int index) {
 		for (MenuCategory category : MenuCategory.values()) {
-			if (category.index == index) {
+			if (category.id == index) {
 				return category;
 			}
 		}

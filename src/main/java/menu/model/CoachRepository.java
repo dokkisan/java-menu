@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class CoachRepository {
-	private static Map<String, Coach> coaches = new HashMap<>();
+	private static int id;
+	private static Map<Integer, Coach> coaches = new HashMap<>();
 
 	public void save(Coach coach) {
-		coaches.put(coach.getName(), coach);
-	}
-
-	public Coach findByName(String name) {
-		return coaches.get(name);
+		coaches.put(++id, coach);
 	}
 
 	public List<Coach> findAll() {
