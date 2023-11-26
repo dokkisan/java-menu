@@ -1,15 +1,13 @@
 package menu.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import menu.message.OperationMessage;
 import menu.model.Coach;
+import menu.model.CoachRepository;
 import menu.model.DayOfWeek;
 import menu.model.MenuCategory;
-import menu.message.OperationMessage;
 import menu.model.MenuManager;
 import menu.view.InputView;
 import menu.view.OutputView;
@@ -24,9 +22,17 @@ public class MenuController {
 	}
 
 	public void run() {
-		List<String> names = getCoachNames();
-		Map<String, Coach> coaches = getAvoidFoods(names);
+		createCoaches(getCoachNames());
+		getAvoidFoods();
+
 		viewMenuRecommendationResult();
+	}
+
+	private void createCoaches(List<String> names) {
+		CoachRepository coachRepository = new CoachRepository();
+		for (String name : names) {
+			coachRepository.save(new Coach(name));
+		}
 	}
 
 	private List<String> getCoachNames() {
@@ -40,14 +46,13 @@ public class MenuController {
 		}
 	}
 
-	private Map<String, Coach> getAvoidFoods(List<String> names) {
-		Map<String, Coach> coaches = new HashMap<>();
-		for (String name : names) {
-			outputView.printMessage(name + OperationMessage.INPUT_AVOID_FOODS.getMessage());
-			List<String> avoidFoods = inputView.inputAvoidFoods();
-			coaches.put(name, new Coach(name, avoidFoods));
+	private void getAvoidFoods() {
+		CoachRepository coachRepository = new CoachRepository();
+		List<Coach> coaches = coachRepository.findAll();
+		for (Coach coach : coaches) {
+			outputView.printMessage(coach.getName() + OperationMessage.INPUT_AVOID_FOODS.getMessage());
+			coach.setAvoidFoods(inputView.inputAvoidFoods());
 		}
-		return coaches;
 	}
 
 	private void viewMenuRecommendationResult() {

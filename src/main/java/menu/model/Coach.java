@@ -1,14 +1,15 @@
 package menu.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Coach {
 	private String name;
 	private List<String> avoidFoods;
 
-	public Coach(String name, List<String> avoidFoods) {
+	public Coach(String name) {
 		this.name = name;
-		this.avoidFoods = avoidFoods;
+		this.avoidFoods = new ArrayList<>();
 	}
 
 	public boolean isAvoidFood(String menu) {
@@ -18,4 +19,10 @@ public class Coach {
 	public String getName() {
 		return name;
 	}
+
+	public void setAvoidFoods(List<String> avoidFoods) {
+		this.avoidFoods = avoidFoods;
+	}
+
+	// TODO: 이름 글자수 2-4 유효성 검사
 }
