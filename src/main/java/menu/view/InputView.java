@@ -1,5 +1,6 @@
 package menu.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,18 +22,20 @@ public class InputView {
 		return List.of(scanner.nextLine().split(","));
 	}
 
-	private List<String> validateInputNamesFormat(List<String> names) {
+	private List<String> validateInputNamesFormat(List<String> inputNames) {
 		final int MIN_NAME_LENGTH = 2;
 		final int MAX_NAME_LENGTH = 4;
 
-		for (String name : names) {
-			name = name.trim();
-			if (name.length() < MIN_NAME_LENGTH) {
+		List<String> names = new ArrayList<>();
+		for (String name : inputNames) {
+			String trimmedName = name.trim();
+			if (trimmedName.length() < MIN_NAME_LENGTH) {
 				throw new IllegalArgumentException(ErrorMessage.MIN_NAME_LENGTH_ERROR.getMessage());
 			}
-			if (name.length() > MAX_NAME_LENGTH) {
+			if (trimmedName.length() > MAX_NAME_LENGTH) {
 				throw new IllegalArgumentException(ErrorMessage.MAX_NAME_LENGTH_ERROR.getMessage());
 			}
+			names.add(trimmedName);
 		}
 		return names;
 	}
