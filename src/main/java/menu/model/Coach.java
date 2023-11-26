@@ -1,19 +1,26 @@
 package menu.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Coach {
 	private final String name;
-	private List<String> avoidFoods;
+	private List<String> avoidMenus;
+	private Map<DayOfWeek, String> recommendedMenus;
 
 	public Coach(String name) {
 		this.name = name;
-		this.avoidFoods = new ArrayList<>();
+		this.avoidMenus = new ArrayList<>();
+		this.recommendedMenus = new HashMap<>();
+		for (DayOfWeek day : DayOfWeek.values()) {
+			recommendedMenus.put(day, "");
+		}
 	}
 
 	public boolean isAvoidFood(String menu) {
-		return avoidFoods.stream().anyMatch(menu::equals);
+		return avoidMenus.stream().anyMatch(menu::equals);
 	}
 
 	public String getName() {
@@ -21,8 +28,16 @@ public class Coach {
 	}
 
 	// TODO: setter 삭제
-	public void setAvoidFoods(List<String> avoidFoods) {
-		this.avoidFoods = avoidFoods;
+	public void setAvoidMenus(List<String> avoidMenus) {
+		this.avoidMenus = avoidMenus;
+	}
+
+	public void recommendedMenus(DayOfWeek day, String menu) {
+		recommendedMenus.put(day, menu);
+	}
+
+	public Map<DayOfWeek, String> getRecommendedMenus() {
+		return recommendedMenus;
 	}
 
 	// TODO: 이름 글자수 2-4 유효성 검사

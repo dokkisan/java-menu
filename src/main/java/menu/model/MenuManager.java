@@ -1,53 +1,52 @@
 package menu.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
 public class MenuManager {
-	private List<MenuCategory> recommendedCategories = new ArrayList<>();
-	private Map<String, List<String>> recommendedMenusResult;
+	private Map<DayOfWeek, MenuCategory> recommendedCategories = new HashMap<>();
 
 	public MenuManager() {
-		this.recommendedCategories = recommendCategories();
+		recommendCategories();
 	}
 
-	public List<MenuCategory> getRecommendedCategories() {
-		return recommendedCategories;
-	}
-
-	public Map<String, List<String>> getRecommendedMenusResult() {
-		return recommendedMenusResult;
-	}
-
-	private List<MenuCategory> recommendCategories() {
+	private void recommendCategories() {
 		final int MAX_RECOMMEND_RANGE = 2;
 
-		for (int i = 0; i < DayOfWeek.values().length; i++) {
+		for (DayOfWeek day : DayOfWeek.values()) {
 			MenuCategory category = MenuCategory.get(Randoms.pickNumberInRange(1, 5));
-			if (Collections.frequency(recommendedCategories, category) >= MAX_RECOMMEND_RANGE) {
+			if (Collections.frequency(recommendedCategories.values(), category) == MAX_RECOMMEND_RANGE) {
 				category = MenuCategory.get(Randoms.pickNumberInRange(1, 5));
 			}
-			recommendedCategories.add(category);
+			recommendedCategories.put(day, category);
 		}
-
-		return recommendedCategories;
 	}
 
-	private void recommendMenu(List<Coach> coaches) {
-		for (Coach coach : coaches) {
-			List<String> recommendedMenus = new ArrayList<>();
-			for (MenuCategory category : recommendedCategories) {
-				String recommendedMenu = Randoms.shuffle(Menu.getMenuBy(category)).get(0);
-				if (coach.isAvoidFood(recommendedMenu)) {
-					recommendedMenu = Randoms.shuffle(Menu.getMenuBy(category)).get(0);
-				}
-				recommendedMenus.add(recommendedMenu);
+	public void recommendMenus() {
+		CoachRepository coachRepository = new CoachRepository();
+		for (DayOfWeek day : DayOfWeek.values()) {
+			List<Coach> coaches = coachRepository.findAll();
+			for (Coach coach : coaches) {
+				MenuCategory todaysCategory = recommendedCategories.get(day);
+				String recommendedMenu = recommendMenuByCategory(coach, todaysCategory);
+				coach.recommendedMenus(day, recommendedMenu);
 			}
-			recommendedMenusResult.put(coach.getName(), recommendedMenus);
 		}
+	}
+
+	private String recommendMenuByCategory(Coach coach, MenuCategory todaysCategory) {
+		String recommendedMenu = Randoms.shuffle(Menu.getMenuBy(todaysCategory)).get(0);
+		if (coach.isAvoidFood(recommendedMenu)) {
+			recommendedMenu = Randoms.shuffle(Menu.getMenuBy(todaysCategory)).get(0);
+		}
+		return recommendedMenu;
+	}
+
+	public Map<DayOfWeek, MenuCategory> getRecommendedCategories() {
+		return recommendedCategories;
 	}
 }

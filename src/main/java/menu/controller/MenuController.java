@@ -2,6 +2,7 @@ package menu.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import menu.message.OperationMessage;
 import menu.model.Coach;
@@ -23,8 +24,8 @@ public class MenuController {
 
 	public void run() {
 		createCoaches(getCoachNames());
+		outputView.printBlankLine();
 		getAvoidFoods();
-
 		viewMenuRecommendationResult();
 	}
 
@@ -52,7 +53,7 @@ public class MenuController {
 		for (Coach coach : coaches) {
 			outputView.printMessage(coach.getName() + OperationMessage.INPUT_AVOID_FOODS.getMessage());
 			List<String> avoidFoods = inputView.inputAvoidFoods();
-			coach.setAvoidFoods(avoidFoods);
+			coach.setAvoidMenus(avoidFoods);
 		}
 	}
 
@@ -61,25 +62,42 @@ public class MenuController {
 		outputView.printMessage(OperationMessage.RECOMMEND_RESULT.getMessage());
 		outputView.printListWithJoining(createLunchDaysForView());
 		outputView.printListWithJoining(createCategoriesForView(menuManager.getRecommendedCategories()));
+		menuManager.recommendMenus();
+		createRecommendedMenusForView();
 		outputView.printBlankLine();
 		outputView.printMessage(OperationMessage.RECOMMEND_SUCCESS.getMessage());
 	}
 
-	private List<String> createCategoriesForView(List<MenuCategory> result) {
+	private List<String> createCategoriesForView(Map<DayOfWeek, MenuCategory> recommendedCategories) {
 		final String CATEGORY_PREFIX = "카테고리";
+
 		List<String> categoryNames = new ArrayList<>();
 		categoryNames.add(CATEGORY_PREFIX);
-		for (MenuCategory category : result) {
-			categoryNames.add(category.getName());
+		for (DayOfWeek day : DayOfWeek.values()) {
+			categoryNames.add(recommendedCategories.get(day).getName());
 		}
 		return categoryNames;
 	}
 
 	private List<String> createLunchDaysForView() {
 		List<String> days = new ArrayList<>();
+		days.add("구분");
 		for (DayOfWeek day : DayOfWeek.values()) {
 			days.add(day.getName());
 		}
 		return days;
+	}
+
+	private void createRecommendedMenusForView() {
+		CoachRepository coachRepository = new CoachRepository();
+		List<Coach> coaches = coachRepository.findAll();
+		for (Coach coach : coaches) {
+			List<String> recommendedMenus = new ArrayList<>();
+			recommendedMenus.add(coach.getName());
+			for (DayOfWeek day : DayOfWeek.values()) {
+				recommendedMenus.add(coach.getRecommendedMenus().get(day));
+			}
+			outputView.printListWithJoining(recommendedMenus);
+		}
 	}
 }
