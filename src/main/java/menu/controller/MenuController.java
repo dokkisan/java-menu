@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import menu.message.ErrorMessage;
 import menu.message.OperationMessage;
 import menu.model.Coach;
 import menu.model.CoachRepository;
 import menu.model.DayOfWeek;
+import menu.model.Menu;
 import menu.model.MenuCategory;
 import menu.model.MenuManager;
 import menu.view.InputView;
@@ -46,12 +48,28 @@ public class MenuController {
 
 	private void getAvoidFoods() {
 		CoachRepository coachRepository = new CoachRepository();
-		List<Coach> coaches = coachRepository.findAll();
-		for (Coach coach : coaches) {
-			outputView.printMessage(coach.getName() + OperationMessage.INPUT_AVOID_FOODS.getMessage());
-			List<String> avoidFoods = inputView.inputAvoidFoods();
-			coach.setAvoidMenus(avoidFoods);
+		while (true) {
+			try {
+				List<Coach> coaches = coachRepository.findAll();
+				for (Coach coach : coaches) {
+					outputView.printMessage(coach.getName() + OperationMessage.INPUT_AVOID_FOODS.getMessage());
+					List<String> avoidMenus = validateAvoidFoods(inputView.inputAvoidFoods());
+					coach.setAvoidMenus(avoidMenus);
+				}
+				return;
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
 		}
+	}
+
+	private List<String> validateAvoidFoods(List<String> avoidMenus) {
+		for (String avoidMenu : avoidMenus) {
+			if (!Menu.isExistMenu(avoidMenu)) {
+				throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getMessage());
+			}
+		}
+		return avoidMenus;
 	}
 
 	private void viewMenuRecommendationResult() {

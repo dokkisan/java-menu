@@ -5,7 +5,8 @@ public enum ErrorMessage {
     MIN_NAME_COUNT_ERROR("코치는 최소 2명 이상 입력해야 합니다."),
     MAX_NAME_COUNT_ERROR("코치는 최대 5명 이하 입력해야 합니다."),
     MIN_NAME_LENGTH_ERROR("코치 이름은 최소 2글자 이상이어야 합니다."),
-    MAX_NAME_LENGTH_ERROR("코치 이름은 최대 5글자 이하여야 합니다.")
+    MAX_NAME_LENGTH_ERROR("코치 이름은 최대 5글자 이하여야 합니다."),
+    INVALID_MENU("존재하지 않는 메뉴입니다.")
     ;
 
     private final String message;

@@ -19,7 +19,7 @@ public class InputView {
 	}
 
 	public List<String> inputAvoidFoods() {
-		return List.of(scanner.nextLine().split(","));
+		return List.of(scanner.nextLine().trim().split(","));
 	}
 
 	private List<String> validateInputNamesFormat(List<String> inputNames) {
