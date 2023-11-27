@@ -64,11 +64,17 @@ public class MenuController {
 	}
 
 	private List<String> validateAvoidFoods(List<String> avoidMenus) {
+		final int MAX_MENU_INPUT_COUNT = 2;
+
 		for (String avoidMenu : avoidMenus) {
 			if (!Menu.isExistMenu(avoidMenu)) {
 				throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getMessage());
 			}
 		}
+		if (avoidMenus.size() > MAX_MENU_INPUT_COUNT) {
+			throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_COUNT.getMessage());
+		}
+
 		return avoidMenus;
 	}
 

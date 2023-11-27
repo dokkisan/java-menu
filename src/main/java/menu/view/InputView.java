@@ -1,8 +1,10 @@
 package menu.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import menu.message.ErrorMessage;
 
@@ -19,7 +21,9 @@ public class InputView {
 	}
 
 	public List<String> inputAvoidFoods() {
-		return List.of(scanner.nextLine().trim().split(","));
+		return Arrays.stream(scanner.nextLine().split(","))
+			.map(String::trim)
+			.collect(Collectors.toList());
 	}
 
 	private List<String> validateInputNamesFormat(List<String> inputNames) {
