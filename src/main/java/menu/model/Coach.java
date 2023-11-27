@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import menu.message.ErrorMessage;
+
 public class Coach {
 	private final String name;
 	private List<String> avoidMenus;
 	private Map<DayOfWeek, String> recommendedMenus;
 
 	public Coach(String name) {
-		this.name = name;
+		this.name = validateNameLength(name);
 		this.avoidMenus = new ArrayList<>();
 		this.recommendedMenus = new HashMap<>();
 		for (DayOfWeek day : DayOfWeek.values()) {
@@ -44,5 +46,16 @@ public class Coach {
 		return recommendedMenus;
 	}
 
-	// TODO: 이름 글자수 2-4 유효성 검사
+	private String validateNameLength(String name) {
+		final int MIN_NAME_LENGTH = 2;
+		final int MAX_NAME_LENGTH = 4;
+
+		if (name.length() < MIN_NAME_LENGTH) {
+			throw new IllegalArgumentException(ErrorMessage.MIN_NAME_LENGTH_ERROR.getMessage());
+		}
+		if (name.length() > MAX_NAME_LENGTH) {
+			throw new IllegalArgumentException(ErrorMessage.MAX_NAME_LENGTH_ERROR.getMessage());
+		}
+		return name;
+	}
 }

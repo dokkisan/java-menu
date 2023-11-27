@@ -24,23 +24,20 @@ public class MenuController {
 
 	public void run() {
 		outputView.printMessage(OperationMessage.START_RECOMMEND.getMessage());
-		createCoaches(getCoachNames());
+		createCoaches();
 		getAvoidFoods();
 		viewMenuRecommendationResult();
 	}
 
-	private void createCoaches(List<String> names) {
+	private void createCoaches() {
 		CoachRepository coachRepository = new CoachRepository();
-		for (String name : names) {
-			coachRepository.save(new Coach(name));
-		}
-	}
-
-	private List<String> getCoachNames() {
 		outputView.printMessage(OperationMessage.INPUT_NAMES.getMessage());
 		while (true) {
 			try {
-				return inputView.inputNames();
+				for (String name : inputView.inputNames()) {
+					coachRepository.save(new Coach(name));
+				}
+				return;
 			} catch (IllegalArgumentException e) {
 				outputView.printMessage(e.getMessage());
 			}
